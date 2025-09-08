@@ -1,0 +1,22 @@
+# https://taskfile.dev
+
+version: "3"
+tasks:
+  run: go run "./cmd/keg"
+  test:
+    cmds:
+      - go test ./mcpf
+      - go test ./mcpfs/cmd
+    sources:
+      - pkg/mcpfs/*.go
+      - pkg/mcpfs/cmd/*.go
+    silent: true
+  install:
+    desc: Install the keg CLI (go install ./cmd/keg) and generate Zsh completions (~/.cache/dotfiles/zsh/completions/_keg).
+    cmds:
+      - go install ./cmd/mcpfs
+      - mcpfs completion zsh > '{{env "HOME"}}/.cache/dotfiles/zsh/completions/_mcpfs'
+    sources:
+      - cmd/mcpfs/*.go
+      - mcpfs/cmd/*.go
+      - mcpfs/*.go
